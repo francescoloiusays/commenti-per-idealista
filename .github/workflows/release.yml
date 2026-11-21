@@ -1,9 +1,10 @@
 name: Release
 
-# Pubblica uno zip pronto da installare per ogni tag v* (es. v1.0.0)
+# A ogni push su main crea (o aggiorna) la release con il numero di versione
+# scritto in manifest.json, con allegato uno zip pronto da installare.
 on:
   push:
-    tags: ['v*']
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,15 +15,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Leggi la versione
+        id: v
+        run: echo "version=$(jq -r .version manifest.json)" >> "$GITHUB_OUTPUT"
       - name: Crea lo zip dell'estensione
         run: |
           mkdir -p dist/commenti-per-idealista
           cp -r manifest.json background.js config.js content.js styles.js popup.html popup.js icons LICENSE PRIVACY.md dist/commenti-per-idealista/
           cd dist && zip -r commenti-per-idealista.zip commenti-per-idealista
       - name: Pubblica la release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.v.outputs.version }}
+          name: Commenti per idealista ${{ steps.v.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
           files: dist/commenti-per-idealista.zip
           body: |
             Scarica **commenti-per-idealista.zip**, estrailo e caricalo da `chrome://extensions` → *Carica estensione non pacchettizzata*. Istruzioni complete nel [README](https://github.com/${{ github.repository }}#installazione-2-minuti).
