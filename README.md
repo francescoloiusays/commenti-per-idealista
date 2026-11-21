@@ -21,8 +21,8 @@ Scarica il nuovo zip, sostituisci il contenuto della cartella e in `chrome://ext
 
 ## Domande frequenti
 
-**Vedo “Accesso non riuscito” o un errore di Google.**
-L’estensione è ancora in fase di prova: per ora possono accedere solo gli account abilitati. Chiedi a chi te l’ha condivisa di aggiungere la tua email Google. Puoi comunque **leggere** i commenti senza accedere.
+**Vedo “Accesso non riuscito”.**
+Assicurati di aver fatto l’accesso a Chrome con un account Google (icona del profilo in alto a destra). Puoi comunque **leggere** i commenti anche senza accedere.
 
 **Funziona su idealista.com (Spagna) e idealista.pt?**
 Sì, su tutti e tre i siti.
